@@ -27,10 +27,10 @@ Additional Tools: Owl Carousel, PrettyPhoto, Chart.js, Bootstrap Components
 📸 Screenshots
 
 Key screens from the Ecova experience:
-![Homepage](ecova.jpg)
-![Homepage](ecova1.jpg)
-![Homepage](causes.jpg)
-![Homepage](calculator.jpg)
-![Homepage](foodcalculator.jpg)
+![Homepage](screenshot/ecova.jpg)
+![Homepage](screenshot/ecova1.jpg)
+![Homepage](screenshot/causes.jpg)
+![Homepage](screenshot/calculator.jpg)
+![Homepage](screenshot/foodcalculator.jpg)
 
 
