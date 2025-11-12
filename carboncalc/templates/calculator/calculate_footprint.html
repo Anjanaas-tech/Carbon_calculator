@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to right,rgb(208, 240, 215),rgb(22, 104, 54));
+            font-family: 'Poppins', sans-serif;
+        }
+        .main-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .nav-tabs .nav-link.active {
+            background: #28a745;
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        .form-control::placeholder {
+            color: #aaa;
+        }
+        .result-box {
+            background: #e9f7ef;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .food-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .food-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .food-item input {
+            width: 80%;
+            margin: 5px 0;
+            text-align: center;
+        }
+        .food-emission {
+            background: #28a745;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="main-heading">Carbon Footprint Calculator</h1>
+    <ul class="nav nav-tabs" id="carbonNav">
+        <li class="nav-item">
+            <a class="nav-link active" href="#" id="house-tab">House</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="food-tab">Food</a>
+        </li>
+    </ul>
+    
+    <div class="container mt-4" id="house-section">
+        <h3>Household Carbon Footprint</h3>
+        <form id="houseForm">
+            <div class="mb-3">
+                <label class="form-label">Electricity Usage (kWh per month):</label>
+                <input type="number" class="form-control" id="electricity" placeholder="e.g., 350" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Gas Usage (therms per month):</label>
+                <input type="number" class="form-control" id="gas" placeholder="e.g., 50" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Water Usage (gallons per month):</label>
+                <input type="number" class="form-control" id="water" placeholder="e.g., 5000" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Calculate</button>
+        </form>
+        <div id="resultBox" class="result-box" style="display: none;">
+            <h4>Your Estimated Carbon Footprint:</h4>
+            <p id="totalEmissions"></p>
+        </div>
+    </div>
+
+    <div class="container mt-4" id="food-section" style="display: none;">
+        <h3>Food Carbon Footprint</h3>
+        <div class="food-inputs">
+            <div class="food-item">
+                <label>Red Meat</label>
+                <input type="number" class="form-control" id="redMeat" value="200"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>White Meat</label>
+                <input type="number" class="form-control" id="whiteMeat" value="200"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Dairy</label>
+                <input type="number" class="form-control" id="dairy" value="250"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Cereals</label>
+                <input type="number" class="form-control" id="cereals" value="350"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Vegetables</label>
+                <input type="number" class="form-control" id="vegetables" value="450"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Fruit</label>
+                <input type="number" class="form-control" id="fruit" value="100"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Oils</label>
+                <input type="number" class="form-control" id="oils" value="90"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Snacks</label>
+                <input type="number" class="form-control" id="snacks" value="150"> kCal/day
+            </div>
+            <div class="food-item">
+                <label>Drinks</label>
+                <input type="number" class="form-control" id="drinks" value="150"> kCal/day
+            </div>
+        </div>
+        <div class="result-box">
+            <h4>Total Food Emissions</h4>
+            <p id="totalFoodEmissions">1762.09 Annual CO₂ emissions (Kg.)</p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("houseForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let electricity = parseFloat(document.getElementById("electricity").value) || 0;
+            let gas = parseFloat(document.getElementById("gas").value) || 0;
+            let water = parseFloat(document.getElementById("water").value) || 0;
+            let total = (electricity * 0.4) + (gas * 5.3) + (water * 0.002);
+            document.getElementById("totalEmissions").innerText = total.toFixed(2) + " kg CO₂/day";
+            document.getElementById("resultBox").style.display = "block";
+        });
+
+        document.getElementById("food-tab").addEventListener("click", function() {
+            document.getElementById("food-section").style.display = "block";
+            document.getElementById("house-section").style.display = "none";
+        });
+
+        document.getElementById("house-tab").addEventListener("click", function() {
+            document.getElementById("house-section").style.display = "block";
+            document.getElementById("food-section").style.display = "none";
+        });
+
+        // Dynamically calculate the food carbon footprint
+        function calculateFoodEmissions() {
+            let redMeat = parseFloat(document.getElementById("redMeat").value) || 0;
+            let whiteMeat = parseFloat(document.getElementById("whiteMeat").value) || 0;
+            let dairy = parseFloat(document.getElementById("dairy").value) || 0;
+            let cereals = parseFloat(document.getElementById("cereals").value) || 0;
+            let vegetables = parseFloat(document.getElementById("vegetables").value) || 0;
+            let fruit = parseFloat(document.getElementById("fruit").value) || 0;
+            let oils = parseFloat(document.getElementById("oils").value) || 0;
+            let snacks = parseFloat(document.getElementById("snacks").value) || 0;
+            let drinks = parseFloat(document.getElementById("drinks").value) || 0;
+
+            let totalEmissions = (redMeat * 148.24) + (whiteMeat * 161.32) + (dairy * 130.80) + (cereals * 206.01) + 
+                                 (vegetables * 53.96) + (fruit * 26.16) + (oils * 46.11) + (snacks * 145.52) + (drinks * 111.18);
+
+            document.getElementById("totalFoodEmissions").innerText = totalEmissions.toFixed(2) + " kg CO₂/day";
+        }
+
+        // Update emissions when user inputs change
+        document.querySelectorAll(".food-item input").forEach(input => {
+            input.addEventListener("input", calculateFoodEmissions);
+        });
+    </script>
+</body>
+</html>
